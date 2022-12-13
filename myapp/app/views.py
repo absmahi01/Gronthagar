@@ -11,6 +11,18 @@ from django.http import JsonResponse
 from django.db.models import Q
 import razorpay
 from django.conf import settings
+from django.urls import reverse_lazy
+from django.contrib import messages
+from app.forms import (
+    ResetPasswordForm)
+from django.contrib.auth.views import (
+    PasswordResetView,
+    PasswordResetConfirmView
+    
+)
+from app.forms import (
+    ResetPasswordConfirmForm
+)
 categories = {code: name for code, name in CATEGORY_CHOICES}
 
 
@@ -113,6 +125,20 @@ class CategoryView(View):
 #         title = Product.objects.filter(category=product[0].category).values('title')
 #         return render(request,"app/category.html",locals()) 
 
+class SendEmailToResetPassword(PasswordResetView):
+    template_name = 'app/password_reset.html'
+    form_class = ResetPasswordForm
+
+  
+
+class ResetPasswordConfirm(PasswordResetConfirmView):
+    template_name = 'app/password_reset_confirm.html'
+    form_class = ResetPasswordConfirmForm
+    success_url = reverse_lazy('login')
+
+    def form_valid(self, form):
+        messages.success(self.request, "Password reset successfully !")
+        return super().form_valid(form)
 
 def orders(request):
     totalitem = 0
