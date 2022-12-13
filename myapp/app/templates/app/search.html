@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+{% load static  %}
+{% block title %}
+Search Result
+{% endblock title %}
+
+{% block main-content %}
+
+<div class="col-sm-9">
+    <div class="row">
+        {% for book in product %}
+         
+        <div class="col text-center mb-4">
+            
+            <a href="{% url 'product-detail' book.id %}" class="btn">
+                <div>
+                    <img src="{{book.product_image.url}}" width="300px" height="200px" />
+                    <div class="fw-bold">{{book.title}}</div>
+                    <div class="fw-bold text-danger">
+                        BDT.{{book.discounted_price}}/-
+                        <small class="fw-light text-decoration-line-through">{{book.selling_price}} 
+                            <br><br>
+                        </small>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+
+
+        {%endfor%}
+    </div>
+</div>
+</div>
+
+</div>
+
+{% endblock main-content %}

@@ -1,0 +1,60 @@
+{% extends 'app/base.html' %}
+{% load static  %}
+{% block title %}
+Category
+{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-3">      
+            <div class="list-group">           
+                {%for book in books %}
+              <a href="#" class="list-group-item list-group-item-action" aria-current="true">{{book.title}}</a>
+                {%endfor%}
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                {% for book in books %}
+                 
+                <div class="col text-center mb-4">
+                    
+                    <a href="{% url 'product-detail' book.id %}" class="btn">
+                        <div>
+                            <img src="{{book.product_image.url}}" width="300px" height="200px" />
+                            <div class="fw-bold">{{book.title}}</div>
+                            <div class="fw-bold text-danger">
+                                BDT.{{book.discounted_price}}/-
+                                <small class="fw-light text-decoration-line-through">{{book.selling_price}} 
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+
+                {%endfor%}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock main-content %}
+
+
+<!-- {% if value %}
+<h1>Category : {{value}}</h1>
+{%else%}
+Category not found.
+{% endif %}
+{% if books %}
+
+<h1>{{book.title}}</h1>
+<p>{{book.description}}</p>
+<img src='{{book.product_image.url}}'/>
+
+{%endif%} -->
